@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["css-side-effects-plugin-ns:app/Components/auto-clone/auto-clone.css"],
+  "sourcesContent": [".repeatOn {\n    height: 12px;\n    width: 12px;\n          border-radius: 50%;\n      display: inline-flex;\n  }"],
+  "mappings": ";AAAA;AACI;AACA;AACM;AACJ;AAAA;",
+  "names": []
+}

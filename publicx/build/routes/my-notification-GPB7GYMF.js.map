@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../app/routes/my-notification/route.jsx"],
+  "sourcesContent": ["// REMIX HMR BEGIN\nimport * as __hmr__ from \"remix:hmr\";\nif (import.meta) {\nimport.meta.hot = __hmr__.createHotContext(\n//@ts-expect-error\n\"app/routes/my-notification/route.jsx\"\n);\nimport.meta.hot.lastModified = \"1709556202413.07\";\n}\n// REMIX HMR END\n\nimport MyNotifications from \"../../Components/my-notification/components/my-notifications\";\nimport {getMyNotifications}  from \"../../Services/my-notification/my-notification-service\";\n\nexport async function loader({request}) {\n    try {\n      const myNotifications = await getMyNotifications();\n      console.log(myNotifications, \"notifying\")\n      return json({ myNotifications});\n    } catch (error) {\n      console.error(\"Error fetching myNotifications:\", error);\n      throw error;\n    }\n  }\n\nexport default function myNotificationRoute(){\n    const {myNotifications}=useLoaderData()\n\n    return(\n    <div>\n        <MyNotifications\n        mynotify={myNotifications}\n        />\n    </div>\n    )\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AA8BQ;AA5BR,IAAI,aAAa;AACjB,cAAY,MAAc;AAAA;AAAA,IAE1B;AAAA,EACA;AACA,cAAY,IAAI,eAAe;AAC/B;AAiBe,SAAR,sBAAsC;AACzC,QAAM,EAAC,gBAAe,IAAE,cAAc;AAEtC,SACA,mDAAC,SACG;AAAA,IAAC;AAAA;AAAA,MACD,UAAU;AAAA;AAAA,IADV;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,EAEA,KAHJ;AAAA;AAAA;AAAA;AAAA,SAIA;AAEJ;",
+  "names": []
+}

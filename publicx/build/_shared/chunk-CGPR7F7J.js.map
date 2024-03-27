@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../app/common/config.jsx"],
+  "sourcesContent": ["// REMIX HMR BEGIN\nimport * as __hmr__ from \"remix:hmr\";\nif (import.meta) {\nimport.meta.hot = __hmr__.createHotContext(\n//@ts-expect-error\n\"app/common/config.jsx\"\n);\nimport.meta.hot.lastModified = \"1709382069643.5525\";\n}\n// REMIX HMR END\n\nconst config = Object.freeze({\n    //domain:[ \"@algorisys.com\",\"@gmail.com\"],\n    Export: false,\n    showIsMiscellaneous: true,\n    projectStatusCheck: ['inprogress', 'new', 'onHold'],\n    monthCount: 3,\n    maxInprogressTaskCount: 2,\n    // socketPath: 'http://localhost:3002'\n    storyPoint: '1 SP = 1 hr',\n    minStoryPonit: '1',\n    delayTime: 50,\n    sitekey: '6LezHHgUAAAAAPTt97gKwfO3H6iDO3LJy4DvVw1R',\n    profileUrl: '/api/ProfilePic/',\n    defaultProjectName:'DefaultProject'\n});\n\n\nexport default config;\n"],
+  "mappings": ";;;;;AAEA,IAAI,aAAa;AACjB,cAAY,MAAc;AAAA;AAAA,IAE1B;AAAA,EACA;AACA,cAAY,IAAI,eAAe;AAC/B;AAGA,IAAM,SAAS,OAAO,OAAO;AAAA;AAAA,EAEzB,QAAQ;AAAA,EACR,qBAAqB;AAAA,EACrB,oBAAoB,CAAC,cAAc,OAAO,QAAQ;AAAA,EAClD,YAAY;AAAA,EACZ,wBAAwB;AAAA;AAAA,EAExB,YAAY;AAAA,EACZ,eAAe;AAAA,EACf,WAAW;AAAA,EACX,SAAS;AAAA,EACT,YAAY;AAAA,EACZ,oBAAmB;AACvB,CAAC;AAGD,IAAO,iBAAQ;",
+  "names": []
+}

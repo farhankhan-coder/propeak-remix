@@ -8,9 +8,17 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import  index from "./styles/index.css";
+import  app from "./styles/app.css";
+import  theme from "./styles/theme.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  {rel :"stylesheet", href:index},
+  {rel :"stylesheet", href:app},
+  {rel :"stylesheet", href:theme},
+
 ];
 
 export default function App() {

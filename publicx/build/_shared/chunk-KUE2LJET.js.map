@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../app/routes/footer.jsx"],
+  "sourcesContent": ["// REMIX HMR BEGIN\nimport * as __hmr__ from \"remix:hmr\";\nif (import.meta) {\nimport.meta.hot = __hmr__.createHotContext(\n//@ts-expect-error\n\"app/routes/footer.jsx\"\n);\nimport.meta.hot.lastModified = \"1709553453920.909\";\n}\n// REMIX HMR END\n\nimport React, { Component } from 'react';\n\nexport default class Footer extends Component {\n\trender() {\n\t\treturn(\n\t\t\t<React.Fragment>\n\t\t\t\t<div className=\"row\">\n\t\t\t\t  <footer className=\"footer\">\n\t\t\t\t      <div className=\"container text-center\">\n\t\t\t\t          <small>Algorisys Technologies Pvt. Limited</small>\n\t\t\t\t      </div>\n\t\t\t\t    </footer>\n\t\t\t\t</div>\n\t\t\t</React.Fragment>\n\t\t)\n\t}\n}"],
+  "mappings": ";;;;;;;;;;;;;;AAWA,mBAAiC;AASnB;AAlBd,IAAI,aAAa;AACjB,cAAY,MAAc;AAAA;AAAA,IAE1B;AAAA,EACA;AACA,cAAY,IAAI,eAAe;AAC/B;AAKA,IAAqB,SAArB,cAAoC,uBAAU;AAAA,EAC7C,SAAS;AACR,WACC,mDAAC,aAAAA,QAAM,UAAN,EACA,6DAAC,SAAI,WAAU,OACb,6DAAC,YAAO,WAAU,UACd,6DAAC,SAAI,WAAU,yBACX,6DAAC,WAAM,mDAAP;AAAA;AAAA;AAAA;AAAA,WAA0C,KAD9C;AAAA;AAAA;AAAA;AAAA,WAEA,KAHJ;AAAA;AAAA;AAAA;AAAA,WAIE,KALJ;AAAA;AAAA;AAAA;AAAA,WAMA,KAPD;AAAA;AAAA;AAAA;AAAA,WAQA;AAAA,EAEF;AACD;",
+  "names": ["React"]
+}
