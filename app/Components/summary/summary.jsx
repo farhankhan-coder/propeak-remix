@@ -44,6 +44,7 @@ export default class Summary extends Component {
 
     this.headerwidth;
     
+    console.log(2222222, props)
     // Initialize state with default values or empty objects to prevent errors
     this.state = {
         data: [],                    

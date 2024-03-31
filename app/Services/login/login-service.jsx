@@ -37,7 +37,7 @@ const errors = {
 
 let count = 0;
 let isLocked = false;
-// import { getSession, commitSession } from '../../Services/server'; 
+// import { getSession, commitSession } from '../../Services/server';
 export async function login(email, password) {
   try {
     const user = await User.findOne({ email: email, isActive: true }).exec();
@@ -53,7 +53,7 @@ export async function login(email, password) {
       if (count === config.loginAttemptCount) {
         isLocked = true;
       }
-      return null; 
+      return null;
     }
 
     // Generate new tokens
@@ -70,7 +70,10 @@ export async function login(email, password) {
     await saveRefreshToken(accessToken, refreshToken, user._id);
 
     // Fetch access rights
-    const accessRights = await AccessRight.find({ userId: user._id }, { projectId: 1, entitlementId: 1, group: 1 }).exec();
+    const accessRights = await AccessRight.find(
+      { userId: user._id },
+      { projectId: 1, entitlementId: 1, group: 1 }
+    ).exec();
 
     return {
       user: {
@@ -90,190 +93,6 @@ export async function login(email, password) {
   }
 }
 
-// export async function login(email, password) {
-//   try {
-//     const user = await User.findOne({ email: email, isActive: true }).exec();
-
-//     if (!user) {
-//       return null;
-//     }
-
-//     const isMatch = await user.comparePassword(password);
-
-//     if (!isMatch) {
-//       count++;
-//       if (count === config.loginAttemptCount) {
-//         isLocked = true;
-//       }
-//       return null; 
-//     }
-
-//     const existingToken = await Token.create({
-//       accessToken: accessToken,
-//       refreshToken: refreshToken,
-//       userId: user._id,
-//     });
-//         let accessToken, refreshToken;
-
-//     if (existingToken) {
-//       accessToken = existingToken.accessToken;
-//       refreshToken = existingToken.refreshToken;
-//     } else {
-//       const u = {
-//         _id: user._id,
-//         name: user.name,
-//         role: user.role,
-//         profilePicture: user.profilePicture,
-//       };
-
-//       accessToken = generateAccessToken(u);
-//       refreshToken = generateRefreshToken(u);
-
-//       await saveRefreshToken(accessToken, refreshToken, user._id);
-//     }
-
-//     const accessRights = await AccessRight.find({ userId: user._id }, { projectId: 1, entitlementId: 1, group: 1 }).exec();
-//     console.log(accessRights, "accessrights from ")
-//     return {
-//       user: {
-//         _id: user._id,
-//         name: user.name,
-//         email: user.email,
-//         role: user.role,
-//         access: accessRights,
-//         profilePicture: user.profilePicture,
-//       },
-//       accessToken: accessToken,
-//       refreshToken: refreshToken,
-//     };
-//   } catch (error) {
-//     console.error("Error in login:", error);
-//     throw error;
-//   }
-// }
-
-// export async function login(email, password) {
-//   try {
-//     const user = await User.findOne({ email: email, isActive: true }).exec();
-
-//     if (!user) {
-//       return null;
-//     }
-
-//     const isMatch = await user.comparePassword(password);
-
-//     if (!isMatch) {
-//       count++;
-//       if (count === config.loginAttemptCount) {
-//         isLocked = true;
-//       }
-//       return null; 
-//     }
-
-//     const existingToken = await Token.create({ userId: user._id }).exec();
-//     let accessToken, refreshToken;
-
-//     if (existingToken) {
-//       accessToken = existingToken.accessToken;
-//       refreshToken = existingToken.refreshToken;
-//     } else {
-//       const u = {
-//         _id: user._id,
-//         name: user.name,
-//         role: user.role,
-//         profilePicture: user.profilePicture,
-//       };
-
-//       accessToken = generateAccessToken(u);
-//       refreshToken = generateRefreshToken(u);
-
-//       await saveRefreshToken(accessToken, refreshToken, user._id);
-//     }
-
-//     const accessRights = await AccessRight.find({ userId: user._id }, { projectId: 1, entitlementId: 1, group: 1 }).exec();
-
-//     return {
-//       user: {
-//         _id: user._id,
-//         name: user.name,
-//         email: user.email,
-//         role: user.role,
-//         access: accessRights,
-//         profilePicture: user.profilePicture,
-//       },
-//       accessToken: accessToken,
-//       refreshToken: refreshToken,
-//     };
-//   } catch (error) {
-//     console.error("Error in login:", error);
-//     throw error;
-//   }
-// }
-// export async function login(email, password) {
-//   try {
-//     const user = await User.findOne({ email: email, isActive: true }).exec();
-//     console.log(user, "users from service ")
-//     if (!user) {
-//       return null;
-//     }
-
-//     const isMatch = await user.comparePassword(password);
-
-//     if (!isMatch) {
-//       count++;
-//       if (count === config.loginAttemptCount) {
-//         isLocked = true;
-//       }
-//       return null; 
-//     }
-
-//     // Query tokens associated with the user
-//     const existingToken = await Token.findOne({ userId: user._id }).exec();
-//     let accessToken, refreshToken;
-
-//     if (existingToken) {
-//       // If a token exists, use it
-//       accessToken = existingToken.accessToken;
-//       refreshToken = existingToken.refreshToken;
-//     } else {
-//       // If no token exists, generate new tokens
-//       const u = {
-//         _id: user._id,
-//         name: user.name,
-//         role: user.role,
-//         // Access rights can be queried here if needed
-//         profilePicture: user.profilePicture,
-//       };
-
-//       accessToken = generateAccessToken(u);
-//       refreshToken = generateRefreshToken(u);
-
-//       // Save refresh token
-//       await saveRefreshToken(accessToken, refreshToken, user._id);
-//     }
-
-//     // Query access rights
-//     const accessRights = await AccessRight.find({ userId: user._id }, { projectId: 1, entitlementId: 1, group: 1 }).exec();
-//     console.log(accessRights, "access right ");
-
-//     return {
-//       user: {
-//         _id: user._id,
-//         name: user.name,
-//         email: user.email,
-//         role: user.role,
-//         access: accessRights,
-//         profilePicture: user.profilePicture,
-//       },
-//       accessToken: accessToken,
-//       refreshToken: refreshToken,
-//     };
-//   } catch (error) {
-//     console.error("Error in login:", error);
-//     throw error;
-//   }
-// }
-
 export const forgotPassword = async (email) => {
   try {
     const token = await new Promise((resolve, reject) => {
@@ -284,7 +103,6 @@ export const forgotPassword = async (email) => {
     });
 
     const user = await User.findOne({ email });
-    
 
     if (!user) {
       return json({ err: errors.LOGIN_GENERAL_ERROR }, { status: 404 });

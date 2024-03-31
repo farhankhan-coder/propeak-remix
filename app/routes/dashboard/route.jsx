@@ -5,6 +5,7 @@ export async function loader({ request }) {
   // Destructure the `request` object from the argument
   try {
     const companies = await getDashboardData();
+    
     console.log(companies, "company here ");
     return json({ companies });
   } catch (error) {

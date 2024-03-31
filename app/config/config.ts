@@ -11,7 +11,7 @@ const config = {
   link: 'http://172.104.176.113:3000/',
   from: 'propeakpms@gmail.com',
   serverPort: 3001,
-  db: 'mongodb://localhost:27017/propeakdb',
+  db: 'mongodb://127.0.0.1:27017/propeakdb',
   taskEmailContent: 'Hi, <br/> <br/> You have been assigned the following task: <br/><br/> <b> Project </b> : #projectName# <br/> <b> Task </b> : #title#' +
     '<br/> <b> Priority </b> : #priority# <br/> <b> Description </b> : #description# <br/> <br/> To view task details, click <a href="http://172.104.176.113:3000/project/task/edit/#projectId#/#newTaskId#" alt="task">' +
     'here</a> or copy this URL on the browser  http://172.104.176.113:3000/project/task/edit/#projectId#/#newTaskId# <br/><br/> Thanks, <br/> proPeak Team',

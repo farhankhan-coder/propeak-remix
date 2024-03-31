@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-import { Form } from "@remix-run/react";
+import { Form, redirect } from "@remix-run/react";
 import Recaptcha from "react-recaptcha";
 import { Link } from "@remix-run/react";
 import * as userservice from "../services/login-service";
 import Auth from "../../../utils/auth";
-import { ACCESS_TOKEN } from "../../../common/const";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../../common/const";
 import config from "../../../common/config";
-import resetPass from"./reset-password.css";
-export const links = () => 
-[{ rel: "stylesheet", href: resetPass }];
+import resetPass from "./reset-password.css";
+export const links = () => [{ rel: "stylesheet", href: resetPass }];
 class Login extends Component {
   state = {
     login: Auth.get("userId") ? true : false,
