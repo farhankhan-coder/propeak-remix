@@ -30,9 +30,9 @@ export default function activeUserComponent() {
   const { activeUsersReport } = useLoaderData();
   return (
     <div>
-      <Header />
-      <Menu />
-      {/* <Summary /> */}
+      {/* <Header /> */}
+      {/* <Menu /> */}
+      <Summary />
       <ActiveUserReport activeUsersReport={activeUsersReport} />
       <Footer />
     </div>

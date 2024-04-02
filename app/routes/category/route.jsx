@@ -19,14 +19,22 @@ export const links = () => [{ rel: "stylesheet", href: categoryc }];
 import {grantAccess} from "../../middleware/grantAccess";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../common/const';
 import { verifyAccessToken } from "../../verify-token/token-management";
+import { isSession } from "@remix-run/node";
+import { getUser } from "../../Services/session";
 
 export async function loader({ request, session }) {
   try {
-    // console.log("Request Body:", request.body);
-      const categories = await getAllCategories();
-      console.log(categories, "cate")
-      // Return categories in the response
-      return json({ categories });
+    // Check if the user is authenticated
+
+    const session = await getUser(request)
+    console.log(1111, session);
+    
+    // User is authenticated, proceed with fetching categories
+    const categories = await getAllCategories();
+    console.log(categories, "cate");
+    
+    // Return categories in the response
+    return json({ categories });
 
   } catch (error) {
     console.error("Error fetching categories:", error);
@@ -35,9 +43,12 @@ export async function loader({ request, session }) {
 }
 
 export default function CategoryComponent() {
-  const { categories } = useLoaderData();
+  const { categories, session } = useLoaderData();
   const [showNewCategory, setShowNewCategory] = useState(false);
   const [showEditCategory, setShowEditCategory] = useState(false);
+
+  console.log("categories", categories);
+  console.log("1234", session);
 
   const [category, setCategory] = useState({
     title: "",

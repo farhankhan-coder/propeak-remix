@@ -42,31 +42,27 @@
 //   }
 // };
 
-
-// import Login from "../../Components/login/components/login";
-// // import { login } from "../../Components/login/services/login-service";
-// import { login } from "../../Services/login/login-service";
-// import { redirect, useActionData } from "@remix-run/react";
-// import { json, createCookieSessionStorage } from "@remix-run/node"; // Import json f responses
+import Login from "../../Components/login/components/login";
+// import { login } from "../../Components/login/services/login-service";
+import { login } from "../../Services/login/login-service";
+import { redirect, useActionData, useLoaderData } from "@remix-run/react";
+import { json, createCookieSessionStorage } from "@remix-run/node"; // Import json f responses
+import { createUserSession } from "../../Services/session";
 // import { Session } from "@remix-run/node/dist";
-// // import { Session } from 'remix';
-// // import { createCookieSessionStorage } from 'remix';
-// // import { Session, createCookieSessionStorage } from '@remix-run/node';
+// import { Session } from 'remix';
+// import { createCookieSessionStorage } from 'remix';
+// import { Session, createCookieSessionStorage } from '@remix-run/node';
 
+export default function LoginForm() {
+  const actionData = useLoaderData();
+  console.log(666666, actionData);
 
-
-// export default function LoginForm() {
-//   const actionData = useActionData()
-//   console.log(666666, actionData);
-
-//   return (
-//     <div>
-//       <Login actionData={actionData}  />
-//     </div>
-//   );
-// }
-
-
+  return (
+    <div>
+      <Login actionData={actionData} />
+    </div>
+  );
+}
 
 // const sessionStorage = createCookieSessionStorage({
 //   cookie: {
@@ -80,97 +76,110 @@
 //   },
 // });
 
-// export const action = async ({ request }) => {
-//   try {
-//     const form = new URLSearchParams(await request.text());
-//     const email = form.get("email");
-//     const password = form.get("password");
+// user should be stroed in session using given remix code
 
-//     const user = await login(email, password);
-    
-//     if (!user) {
-//       return json({ error: "Invalid email or password" }, { status: 401 });
-//     }
 
-//     const sessionData = new Session({ userId: user.id });
+export const action = async ({ request, session }) => {
+  try {
+    const form = new URLSearchParams(await request.text());
+    const email = form.get("email");
+    const password = form.get("password");
 
-//     return json({ data: user }, {
-//       headers: {
-//         'Set-Cookie': await sessionStorage.commit(sessionData),
-//         'Location': '/', // Redirect to the home page
-//       },
-//       status: 303, // Use 303 status code for redirection after a POST request
-//     });
-//   } catch (error) {
-//     console.error("Error in login action:", error);
-//     return json({ error: "An error occurred during login" }, { status: 500 });
+    const user = await login(email, password);
+    console.log(141414, user);
+
+    if (!user) {
+      return json({ error: "Invalid email or password" }, { status: 401 });
+    }
+
+    return createUserSession(user, "/");
+    // session.setItem("userData", JSON.stringify(user));
+
+    // session.set({"user": user});
+
+    // const sessionData = new Session({ userId: user.id });
+
+    // return redirect('/')
+    // return json(
+    //   { data: user },
+    //   {
+    //     headers: {
+    //       "Set-Cookie": await sessionStorage.commit(sessionData),
+    //       Location: "/", // Redirect to the home page
+    //     },
+    //     status: 303, // Use 303 status code for redirection after a POST request
+    //   }
+    // );
+  } catch (error) {
+    console.error("Error in login action:", error);
+    return json({ error: "An error occurred during login" }, { status: 500 });
+  }
+};
+
+// import { json, redirect } from "@remix-run/node"; // or cloudflare/deno
+// import { useLoaderData } from "@remix-run/react";
+// import Login from "../../Components/login/components/login";
+// import { getSession, commitSession } from "../../sesion";
+// import { login } from "../../Services/login/login-service";
+
+// export async function loader({
+//   request,
+// }) {
+//   const session = await getSession(
+//     request.headers.get("Cookie")
+//   );
+
+//   if (session.has("userId")) {
+//     // Redirect to the home page if they are already signed in.
+//     return redirect("/");
 //   }
-// };
 
+//   const data = { error: session.get("error") };
 
-import { json, redirect } from "@remix-run/node"; // or cloudflare/deno
-import { useLoaderData } from "@remix-run/react";
-import Login from "../../Components/login/components/login";
-import { getSession, commitSession } from "../../sesion";
-import { login } from "../../Services/login/login-service";
+//   return json(data, {
+//     headers: {
+//       "Set-Cookie": await commitSession(session),
+//     },
+//   });
+// }
 
-export async function loader({
-  request,
-}) {
-  const session = await getSession(
-    request.headers.get("Cookie")
-  );
+// export async function action({
+//   request,
+// }) {
+//   const session = await getSession(
+//     request.headers.get("Cookie")
+//   );
+//   const form = await request.formData();
+//   const email = form.get("username");
+//   const password = form.get("password");
 
-  if (session.has("userId")) {
-    // Redirect to the home page if they are already signed in.
-    return redirect("/");
-  }
+//   const user = await login(email, password);
+//   console.log(2121212, user);
 
-  const data = { error: session.get("error") };
+//   if (user == null) {
+//     session.flash("error", "Invalid username/password");
 
-  return json(data, {
-    headers: {
-      "Set-Cookie": await commitSession(session),
-    },
-  });
-}
+//     // Redirect back to the login page with errors.
+//     return redirect("/", {
+//       headers: {
+//         "Set-Cookie": await commitSession(session),
+//       },
+//     });
+//   }
 
-export async function action({
-  request,
-}) {
-  const session = await getSession(
-    request.headers.get("Cookie")
-  );
-  const form = await request.formData();
-  const email = form.get("username");
-  const password = form.get("password");
+//   session.set("userId", user);
 
-  const user = await login(email, password);
+//   // Login succeeded, send them to the home page.
+//   return redirect("/", {
+//     headers: {
+//       "Set-Cookie": await commitSession(session),
+//     },
+//   });
+// }
 
-  if (user == null) {
-    session.flash("error", "Invalid username/password");
+// export default function LoginForm() {
+//   const { error } = useLoaderData();
 
-    // Redirect back to the login page with errors.
-    return redirect("/", {
-      headers: {
-        "Set-Cookie": await commitSession(session),
-      },
-    });
-  }
-
-  session.set("userId", user);
-
-  // Login succeeded, send them to the home page.
-  return redirect("/", {
-    headers: {
-      "Set-Cookie": await commitSession(session),
-    },
-  });
-}
-
-export default function LoginForm() {
-  const { error } = useLoaderData();
-
-  return (
-<Login error={error} />  );
-}
+//   return (
+// <Login error={error} />  );
+// }
