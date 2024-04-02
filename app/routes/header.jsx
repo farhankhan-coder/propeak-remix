@@ -31,7 +31,7 @@ export default class Header extends React.Component {
     // Initialize socket connection
     this.socket = io.connect("/", {
       secure: true,
-      path: "/chat/socket.io"
+      path: "/chat"
     });
     this.userId = Auth.get("userId");
     this.socket.emit("my notification userId", this.userId);

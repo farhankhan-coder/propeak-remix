@@ -1,6 +1,7 @@
 import { createCookieSessionStorage } from "@remix-run/node";
 import secrets from "../config/secret";
 import { redirect } from "@remix-run/node";
+import User from "../models/user/user-model";
 const sessionSecret = secrets.secret;
 console.log("session secret is:", sessionSecret);
 if (!sessionSecret) {
@@ -33,14 +34,14 @@ export function getUserSession(request) {
 }
 
 export async function getUser(request) {
-  const session = await getUserSession(request);
-  const userId = session.get("userId");
-  if (!userId) {
-    return null;
-  }
-
   try {
-    const user = await db.user.findUnique({ where: { id: parseInt(userId) } });
+    const session = await getUserSession(request);
+    const userId = session.get("userId");
+    if (!userId) {
+      return null;
+    }
+    const user = await User.findOne({ where: { id: parseInt(userId._id) } });
+    console.log("vishal", user);
     return user;
   } catch (error) {
     return null;

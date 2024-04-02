@@ -8,16 +8,17 @@ import {
 } from "../../Services/category/category-service";
 import { json } from "@remix-run/react";
 import categoryc from "../../Components/category/category.css";
+import { getUser } from "../../session";
 // import { getUser } from "../../routess/loginn/services/login-service";
 export const links = () => [{ rel: "stylesheet", href: categoryc }];
 
-export async function loader({request}) {
+export async function loader({ request }) {
   try {
-    const categories = await getAllCategories();
-    // const user = await getUser(request); // Get logged-in user
-    // console.log(user, "user")
+    // const categories = await getAllCategories();
+    console.log("user11111");
+    const user = await getUser(request); // Get logged-in user
     // console.log(categories);
-    return json({ categories  });
+    // return json({ categories  });
   } catch (error) {
     console.error("Error fetching categories:", error);
     throw error;
@@ -55,7 +56,7 @@ export default function CategoryComponent() {
   const editCategoryWindow = (selectedCategory) => {
     setShowEditCategory(true);
     setCategory({
-      _id: selectedCategory._id, 
+      _id: selectedCategory._id,
       title: selectedCategory.title,
       displayName: selectedCategory.displayName,
       custom: selectedCategory.custom,
@@ -79,8 +80,6 @@ export default function CategoryComponent() {
     setLabelSuccessValue("");
     setLabelValue("");
   };
-  
-
 
   return (
     <div className="container bg-white">
@@ -113,25 +112,25 @@ export default function CategoryComponent() {
       <div className="row">
         <div className="col-sm-12 col-md-5 col-lg-5 order-lg-1 order-md-1 form-wrapper">
           {showEditCategory ||
-            (showNewCategory &&
+            (showNewCategory && (
               // categories.map((category) => (
-                <CategoryForm
-                  key={category._id} // Make sure to provide a unique key for each component in the array
-                  category={category}
-                  categories={categories}
-                  labelsuccessvalue={labelsuccessvalue}
-                  labelvalue={labelvalue}
-                  closeCategory={closeCategory}
-
-                />
-              // ))
-              )}
+              <CategoryForm
+                key={category._id} // Make sure to provide a unique key for each component in the array
+                category={category}
+                categories={categories}
+                labelsuccessvalue={labelsuccessvalue}
+                labelvalue={labelvalue}
+                closeCategory={closeCategory}
+              />
+            ))
+            // ))
+          }
         </div>
         <div className={`col-sm-12 col-md-7 col-lg-7 contentWrapper`}>
           <div className="scroll">
             <CategoryList
               categories={categories}
-              editCategoryWindow={editCategoryWindow} 
+              editCategoryWindow={editCategoryWindow}
               closeCategory={closeCategory}
             />
           </div>
@@ -140,7 +139,6 @@ export default function CategoryComponent() {
     </div>
   );
 }
-
 
 export async function action({ request }) {
   try {
@@ -171,24 +169,6 @@ export async function action({ request }) {
     return json({ error: "Internal server error." }, { status: 500 });
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useState } from "react";
 // import CategoryList from "../../Components/category/category-list";
@@ -314,7 +294,7 @@ export async function action({ request }) {
 //           <div className="scroll">
 //             <CategoryList
 //               categories={categories}
-//               editCategoryWindow={editCategoryWindow} 
+//               editCategoryWindow={editCategoryWindow}
 //             />
 //           </div>
 //         </div>
